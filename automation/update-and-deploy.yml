@@ -1,0 +1,97 @@
+# This visible file is a template, not an active workflow.
+# In GitHub Add file -> Create new file, create:
+# .github/workflows/update-and-deploy.yml
+# Then paste this file's entire contents.
+name: Collect disclosures and deploy
+on:
+  workflow_dispatch:
+    inputs:
+      revalidate:
+        description: Re-download previously parsed SEC N-PX files
+        type: boolean
+        default: false
+  schedule:
+    - cron: '37 10 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'docs/**'
+      - 'tests/**'
+      - 'config/**'
+      - '.github/workflows/update-and-deploy.yml'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: disclosure-pages
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Data correctness tests
+        run: python -m unittest discover -s tests -v
+      - name: JavaScript syntax
+        run: |
+          node --check docs/app.js
+          node tests/test_ui.js
+      - name: Collect official data
+        id: collect
+        continue-on-error: true
+        env:
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+          FDIC_API_KEY: ${{ secrets.FDIC_API_KEY }}
+          CFTC_APP_TOKEN: ${{ secrets.CFTC_APP_TOKEN }}
+          REVALIDATE: ${{ inputs.revalidate }}
+        shell: bash
+        run: |
+          args=()
+          if [ "$REVALIDATE" = "true" ] || [ "$(date -u +%u)" = "7" ]; then
+            args+=(--revalidate)
+          fi
+          python app/collect.py "${args[@]}"
+      - name: Save snapshot and failure status
+        run: |
+          git config user.name "Eurika"
+          git config user.email "eurikamonica@gmail.com"
+          git add docs/data/live.json docs/data/live.js
+          if ! git diff --cached --quiet; then
+            git commit -m "Update official disclosure snapshot"
+            git push origin HEAD:main
+          fi
+      - name: Preserve downloaded source evidence (30 days)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-evidence-${{ github.run_id }}
+          path: storage/
+          retention-days: 30
+          if-no-files-found: ignore
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs
+    outputs:
+      collection_outcome: ${{ steps.collect.outcome }}
+  deploy:
+    needs: collect
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy dashboard, including source health
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Flag incomplete collection after publishing status
+        if: needs.collect.outputs.collection_outcome == 'failure'
+        run: |
+          echo 'One or more sources failed. The dashboard shows errors and keeps previous valid data.'
+          exit 1

@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="独立的 CFTC COT、FDIC 银行财务与 SEC N-PX 公示数据实验室。">
+<title>Disclosure Lab · 公示数据实验室</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header><a class="brand" href="index.html"><span class="brand-icon">F<span>↗</span></span><span>DISCLOSURE LAB<small>Filing Flows · 独立扩展试作</small></span></a><div class="header-right"><span class="dot"></span> PUBLIC DATA / OPEN RESEARCH</div></header>
+<main>
+<section class="intro"><div><div class="eyebrow">FOLLOW THE DISCLOSURES</div><h1>从公开记录，<br>看清资金与决策。</h1><p>期货分类持仓 · 银行季度财务 · 基金代理投票<br>同一工作台，保留每类数据自己的口径。</p></div><div class="intro-aside"><div class="eyebrow">DATA WORKSPACE</div><label for="mode">数据来源</label><select id="mode"><option value="official">官方数据快照</option><option value="demo">虚构演示数据</option></select><div id="buildtime"></div><p>网页展示已下载的数据。自动更新由后台采集任务执行。</p></div></section>
+<nav aria-label="数据模块"><button data-tab="cot" class="active" aria-pressed="true">01 <span>COT 持仓</span></button><button data-tab="banks" aria-pressed="false">02 <span>银行财务</span></button><button data-tab="npx" aria-pressed="false">03 <span>N-PX 投票</span></button><button data-tab="status" aria-pressed="false">↻ <span>采集状态</span></button></nav>
+<div id="notice" role="status"></div>
+<section id="workspace" aria-live="polite"></section>
+<footer><span>DISCLOSURE LAB / v1.1</span><p>仅供信息与研究使用，非投资建议。报告期不等于公开时间；本版历史数据不保证当时可见，不能直接用于无前视偏差回测。</p><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener">CFTC ↗</a><a href="https://api.fdic.gov/banks/docs/" target="_blank" rel="noopener">FDIC ↗</a><a href="https://www.sec.gov/edgar/search/" target="_blank" rel="noopener">SEC ↗</a></footer>
+</main>
+<script src="data/live.js"></script><script src="data/demo.js"></script><script src="app.js"></script>
+</body></html>

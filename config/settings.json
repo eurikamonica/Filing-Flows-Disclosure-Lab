@@ -1,0 +1,44 @@
+{
+  "cot": {
+    "since": "2023-01-01",
+    "datasets": [
+      {
+        "id": "72hh-3qpy",
+        "family": "disaggregated",
+        "codes": [
+          "067651",
+          "088691"
+        ]
+      },
+      {
+        "id": "gpe5-46if",
+        "family": "tff",
+        "codes": [
+          "097741"
+        ]
+      }
+    ]
+  },
+  "banks": {
+    "since": "20200101",
+    "certs": [
+      628,
+      3510,
+      3511
+    ]
+  },
+  "npx": {
+    "since": "2024-01-01",
+    "ciks": [
+      "0001630243"
+    ],
+    "max_filings_per_cik": 30
+  },
+  "http": {
+    "timeout": 40,
+    "retries": 3,
+    "min_interval_seconds": 0.55,
+    "max_response_mb": 80,
+    "sec_user_agent": "Eurika eurikamonica@gmail.com"
+  }
+}
