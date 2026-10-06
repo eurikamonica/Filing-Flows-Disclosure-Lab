@@ -1,34 +1,48 @@
-# 验证记录
+# Validation report — v2
 
-制作日期：2026-10-06。
+Date: 2026-10-06. Default acquisition identity: `Eurika eurikamonica@gmail.com`.
 
-## 已通过
+## Passed
 
-- **24 项 Python 测试**：真实 COT 字段对应；净仓/连续周差分；52 期不足与恒定区间；银行 YTD→单季、跨年 Q1、缺失与去重；实际 N-PX XML 31 行；分拆投票不重复计算；管理层方向独立；缺少投票明细；XML 实体拒绝；历史分片与去重；修订不合并；失败保留旧数据；失败申报再次尝试；配置截断标记；官方/演示隔离；缺少 SEC 身份停止请求；配置默认联系标识生效、环境变量优先覆盖。
-- **12 项前端模板/逻辑检查**：官方与演示四个页面各渲染一次，转义、链接协议、CSV 公式文本处理、缺失值显示。采用 Node 中的轻量 DOM 替身，不是浏览器测试。
-- JavaScript `node --check docs/app.js`；全部 Python 入口可编译；工作流 YAML 已解析检查；附带原始响应 SHA-256 核验通过。
-- CFTC 两个数据集的真实配置范围请求成功；共 2,940 个市场/类别/日期记录。
-- FDIC 三家银行的真实请求成功；共 78 个银行季度。实际返回银行名称与 CERT 核对成功。
-- SEC N-PX 完整自动发现、目录遍历、XML 下载与解析已使用 `Eurika eurikamonica@gmail.com` 实测通过。当前配置机构发现两份报告（2024、2025），共 70 条投票记录，状态 ok，无错误。
-- 生成的 JSON 和 JS 两种官方快照均可读取；演示数据单独保存。
-- ZIP 打包时检查任意路径层级均无点开头名称；排除 Python 缓存、临时文件和运行时 storage。
+- **50 Python unit tests**: 24 existing data/client tests, 17 reused 13F tests, 9 congressional extraction/review tests.
+- **18 frontend template/logic checks**: seven views rendered in official and demo modes, plus escaping, safe links, CSV formula-text handling and null formatting. Uses a lightweight DOM substitute, not a browser.
+- JavaScript syntax checks for both `docs/app.js` and `docs/extensions.js`.
+- Live 13F collection: Berkshire 8 filings / 7 resolved periods; Pershing Square 7 filings / 6 resolved periods. Actual XML tables reconciled to their filing summaries.
+- Live House acquisition: 14 PDFs discovered from official annual-index links, downloaded and text-extracted; 294 positional monetary-range candidates.
+- Real OCR execution: forced Poppler/Tesseract extraction on House PTR 20035553, one page. It found the disclosed transaction interval; mean word confidence was approximately 91.96, which is not a financial accuracy score.
+- Six congressional records checked against rendered official pages: five asset records on page 1 of the 2024/2025 annual reports and one transaction on page 1 of the 2026 PTR. Reviewed CSV source hashes and pages validated.
+- Existing real COT, bank and N-PX snapshots retained from prior successful collection; their tests still pass.
+- House annual-index year and filing date are separately preserved.
+- Tests cover visually adjacent asset/income columns, open-ended intervals, unsupported filing codes, source-hash mismatches, missing transaction dates and candidate/approved separation.
 
-## 尚未验证或未实现
+## Not claimed
 
-- 真正浏览器中的页面布局、点击、CSV 下载和移动端视觉效果。当前环境按 Sites 技能要求跳过不可用的浏览器验收。
-- GitHub 仓库创建、Secrets 设置、Actions 执行和 Pages 发布。交付的是待用户部署的 ZIP。
-- 所有基金历史格式/所有 N-PX schema 变体；旧 HTML 报告通用解析、修订替换合并、保密部分还原均未实现。
-- FDIC API key 实际认证测试（本次无 key 调用成功）。
-- 全美银行全量、全市场机构搜索、实时推送提醒、账户系统、订阅邮件、数据库服务器。
-- 13F 与政府官员披露不在本包范围内。
+- No live GitHub Actions execution, remote repository write or Pages deployment was performed.
+- No real-browser visual/interactivity/mobile/CSV-download validation was available in this environment. Perform the deployment acceptance checklist.
+- The OCR smoke test used a real PDF rendered through forced OCR. It is not a benchmark across diverse historical scans, handwriting, rotated pages or damaged PDFs.
+- Senate and state/local automatic portal acquisition is not implemented; PDF import and review are implemented.
+- No exhaustive extraction or review of all congressional financial fields. Candidate intervals include non-asset amounts. The six reviewed examples are not a full portfolio.
+- No automatic congressional amendment consolidation, ticker entity resolution, corporate-action adjustment or exact real-time holdings.
+- No all-market coverage. Watchlists and configured date ranges control acquisition.
+- No complete point-in-time backtest database or permanent raw-document archive. Workflow evidence expires after its configured retention.
 
-## 重跑
+## Reproduce checks
 
 ```powershell
+py -3.12 -m pip install -r requirements.txt
 py -3.12 -m unittest discover -s tests -v
-# 如已安装 Node，可额外运行；运行网站本身不需要 Node。
 node --check docs/app.js
+node --check docs/extensions.js
 node tests/test_ui.js
 ```
 
-部署后的实际交互验收清单见 DEPLOY-GITHUB.md。成功抓取不等于所有解析格式已覆盖；页面保留源链接供核对。
+Node is needed only for the optional local JS checks, not for viewing or collecting data. The GitHub runner supplies Node for the included checks.
+
+Live source verification:
+
+```powershell
+py -3.12 app/collect.py --only holdings --revalidate
+py -3.12 app/collect.py --only congress --revalidate
+```
+
+Expect network and source changes; preserve and inspect any failed status rather than treating old data as freshly verified.

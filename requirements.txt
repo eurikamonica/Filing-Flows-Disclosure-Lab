@@ -1,2 +1,2 @@
-# Python 3.12 or newer. Runtime uses the Python standard library only.
-# No pip install, Node.js, npm, paid data subscription, or frontend CDN required.
+pdfplumber==0.11.8
+# OCR additionally requires system packages: tesseract-ocr and poppler-utils.

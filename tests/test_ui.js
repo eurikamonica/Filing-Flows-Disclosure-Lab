@@ -7,9 +7,9 @@ const root=path.resolve(__dirname,'..');
 const elements=new Map();
 const doc={getElementById(id){if(!elements.has(id))elements.set(id,{innerHTML:'',textContent:'',className:'',value:'',setAttribute(){},classList:{toggle(){}}});return elements.get(id)},querySelectorAll(){return []}};
 const context=vm.createContext({document:doc,window:{},console,setTimeout,URL,Blob});
-for(const f of ['data/live.js','data/demo.js','app.js'])vm.runInContext(fs.readFileSync(path.join(root,'docs',f),'utf8'),context,{filename:f});
+for(const f of ['data/live.js','data/demo.js','extensions.js','app.js'])vm.runInContext(fs.readFileSync(path.join(root,'docs',f),'utf8'),context,{filename:f});
 let checks=0;
-for(const mode of ['official','demo'])for(const tab of ['cot','banks','npx','status']){
+for(const mode of ['official','demo'])for(const tab of ['holdings','congress','review','cot','banks','npx','status']){
  vm.runInContext(`state.mode='${mode}';state.tab='${tab}';state.date='';state.page=0;render();`,context);
  const html=elements.get('workspace').innerHTML;
  assert.ok(html.length>150,`${mode}/${tab} did not render`);

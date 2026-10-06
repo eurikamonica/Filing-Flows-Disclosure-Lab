@@ -40,5 +40,33 @@
     "min_interval_seconds": 0.55,
     "max_response_mb": 80,
     "sec_user_agent": "Eurika eurikamonica@gmail.com"
+  },
+  "holdings": {
+    "since": "2025-01-01",
+    "managers": [
+      {
+        "cik": "1067983",
+        "name": "Berkshire Hathaway"
+      },
+      {
+        "cik": "1336528",
+        "name": "Pershing Square Capital Management"
+      }
+    ]
+  },
+  "congress": {
+    "years": [
+      2024,
+      2025,
+      2026
+    ],
+    "last_names": [
+      "Pelosi"
+    ],
+    "max_reports_per_year": 20,
+    "max_pdf_pages": 100,
+    "ocr_dpi": 200,
+    "reviewed_file": "config/reviewed-disclosures.csv",
+    "imports_manifest": "config/imports.json"
   }
 }

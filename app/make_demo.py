@@ -10,7 +10,7 @@ def main():
     cot=[]
     for i in range(65):
         day=(dt.date(2025,1,7)+dt.timedelta(weeks=i)).isoformat()
-        for code,market,base in [('DEMO1','DEMO · 虚构黄金期货',140000),('DEMO2','DEMO · 虚构原油期货',220000)]:
+        for code,market,base in [('DEMO1','DEMO · Fictional gold futures',140000),('DEMO2','DEMO · Fictional crude futures',220000)]:
             r={'report_date_as_yyyy_mm_dd':day,'cftc_contract_market_code':code,'market_and_exchange_names':market,'open_interest_all':base*3}
             for j,(lf,sf) in enumerate(__import__('core').COT_FIELDS['disaggregated'].values()):
                 r[lf]=int(base*(.6+.2*math.sin(i/8+j)))
@@ -38,15 +38,18 @@ def main():
             how=['FOR','AGAINST','ABSTAIN','FOR','1 YEAR'][i%5]
             rows.append({'id':f'demo-{yr}-{i}','issuer':['DEMO Example Energy','DEMO Example Technology','DEMO Example Retail'][i%3],
                          'cusip':f'DEMO{i%3}','isin':'','meeting_date':f'{yr}-05-{i%28+1:02}',
-                         'description':['虚构：高管薪酬咨询投票','虚构：董事选举','虚构：股东提案'][i%3],
+                         'description':['Fictional say-on-pay vote','Fictional director election','Fictional shareholder proposal'][i%3],
                          'categories':['DEMO CATEGORY'],'shares_voted':10000+i*200,'shares_on_loan':500 if i%4==0 else 0,
                          'votes':[{'how':how,'shares':10000+i*200,'management_alignment':'AGAINST' if i%5==1 else 'FOR'}],
                          'series_ids':['DEMO SERIES'],'manager_numbers':[],'source_url':'','raw_fields':{}})
         filings.append({'accession':f'DEMO-{yr}','cik':'DEMO','filer':'DEMO · Example Investment Manager',
                         'form':'N-PX','report_date':f'{yr}-06-30','filing_date':f'{yr}-08-20','is_amendment':False,
-                        'parse_status':'demo','source_url':'','coverage_note':'全部为虚构演示记录','votes':rows})
+                        'parse_status':'demo','source_url':'','coverage_note':'Fictional demo records only','votes':rows})
+    from holdings13f.build import demo as holdings_demo
     stamp=now()
-    modules={'cot':{'rows':cot},'banks':{'rows':banks},'npx':{'filings':filings}}
+    modules={'cot':{'rows':cot},'banks':{'rows':banks},'npx':{'filings':filings},'holdings':{'managers':holdings_demo()},'congress':{'reports':[],'records':[],'coverage_note':'Fictional demonstration only'}}
+    from demo_congress import congress_demo
+    modules['congress']=congress_demo()
     for m in modules.values():m.update(status='demo',updated_at=stamp,last_attempt=stamp,coverage='Fictional demonstration only')
     payload={'mode':'demo','generated_at':stamp,'modules':modules}
     (ROOT/'docs/data/demo.js').write_text('window.DISCLOSURE_DEMO = '+json.dumps(payload,ensure_ascii=False)+';\n',encoding='utf-8')

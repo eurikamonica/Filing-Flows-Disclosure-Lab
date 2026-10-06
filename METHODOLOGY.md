@@ -1,77 +1,84 @@
-# 数据口径与计算
+# Definitions and limitations
 
-## 通用
+## Shared timing and missing values
 
-- `date` / `report_date` 是报告期，不是数据首次公开时间。
-- `filing_date` / `accepted_at` 是申报信息；`first_seen_at` 是本系统发现时间；`fetched_at` / `updated_at` 是获取或处理时间。
-- 本版没有构建完整的 point-in-time 数据库。重新抓取历史会得到修订后的官方数据，不能直接宣称无前视偏差回测。
-- `null` 显示为 `—`；不以零代替未知值。
-- CSV 导出当前筛选的所有记录，不仅当前分页；对象/列表保留 JSON 字符串。
-- CSV 对可能被电子表格解释为公式的文本进行前缀处理，实际数值仍保留为数值字符串。
-- `docs/data/live.json` 与 `live.js` 是同一数据的两种封装；前端本地打开读取 JS。演示文件完全独立。
+Report dates, filing dates, acceptance times, first-seen times and collection times are different. Historical data may reflect later corrections. This is not a complete point-in-time database. Missing values remain null and display as an em dash; failures do not become zero positions.
+
+Official and fictional datasets are separate. CSV exports cover the current filtered rows, not only the visible table page. Complex fields are JSON strings. Potential spreadsheet-formula text receives a protective prefix.
+
+## 13F
+
+The parser and tests were reused from the earlier `Filing-Flows-13F-Standalone.zip`, then integrated with the unified HTTP client and persisted snapshots.
+
+Security identity is `CUSIP | share class | Put/Call flag | SH/PRN`. Options and common shares are not combined. Duplicate rows for the same identity are aggregated for display, while original filing rows remain available in the snapshot.
+
+Values from filings before 2023-01-03 are converted from thousands to dollars; later-form values use dollars. The cutoff is based on filing date, not report period. Each file's information-table row count and value total are reconciled with the cover summary. A mismatch fails rather than silently publishing a suspect table.
+
+Amendments:
+
+- ORIGINAL starts a report-period base.
+- RESTATEMENT replaces that base.
+- NEW HOLDINGS adds entries to the available base.
+- Missing bases or ambiguous multiple originals flag incomplete snapshots; comparisons are disabled.
+- 13F-NT is a notice, not a zero-holdings report.
+- Confidential omission flags remain visible. Even a structurally complete public table may omit confidential holdings.
+
+Calculations:
+
+- Weight = disclosed security value / sum of disclosed table values.
+- Quantity change = current quantity − earlier quantity.
+- Quantity change % = `(current / earlier − 1) × 100`; null when earlier quantity is zero/absent.
+- Weight change in percentage points = `(current weight − earlier weight) × 100`.
+- “New” and “not disclosed” refer to appearance in the compared public tables, not confirmed trade execution.
+
+Price changes affect disclosed values even without quantity changes. Splits, reorganizations, transfers and reporting scope changes can affect quantities. The package does not apply corporate-action adjustments. Disclosed 13F value is not total AUM, and the data do not include a complete set of shorts or every asset class.
+
+The history selector can compare any earlier available period. The security chart leaves an unreported security as a gap, not zero. A filing-date `as_of` cutoff is optional but does not replace a full historical publication-state archive.
+
+## Congressional disclosures
+
+Annual disclosed assets and PTR transactions are separate record types. Keep ownership labels (such as SP) and distinguish reported asset values from transaction amounts and income.
+
+Amounts remain intervals. An open upper bound remains open. Asset charts show intervals rather than midpoint estimates; no “exact current portfolio value” is calculated. PTRs do not provide enough information to reconstruct a complete current portfolio.
+
+Annual comparison is limited to reviewed excerpts. A missing reviewed row may reflect incomplete review or changes in disclosure, not a disposal. A new reviewed row is not proof of a purchase. The current comparison key is the reviewed asset name plus owner; name changes require human reconciliation.
+
+The six included reviewed rows are partial, page-checked examples. All other extracted monetary ranges remain unclassified candidates, including possible income, liability, option-price and non-asset values. Confidence in OCR characters is not confidence in financial interpretation.
+
+The House index year can differ from the filing year. Senate and state/local PDFs are import-only; they do not inherit House reporting rules. Congressional amendment consolidation and precision portfolio reconstruction are not implemented.
 
 ## COT
 
-只下载期货，不混入 futures-and-options-combined 数据。
+Only futures-only datasets are used. Disaggregated and TFF classifications differ and are kept separate.
 
-Disaggregated 分类：生产商/贸易商、掉期交易商、Managed money、其他可报告、不可报告。
-TFF 分类：Dealer/Intermediary、Asset managers、Leveraged funds、其他可报告、不可报告。
+- Net = long contracts − short contracts.
+- Weekly change requires report dates exactly seven days apart.
+- 52-observation index = `100 × (current net − window minimum) / (window maximum − window minimum)`.
 
-二者用途不同。日元采用 TFF，黄金和 WTI 采用 Disaggregated；不能把 managed money 与 leveraged funds 视为完全相同人群。
+The index is undefined with fewer than 52 valid observations or a constant range. It is a range position, not a percentile. Missing weeks mean 52 observations may cover more than 52 weeks. Separate spreading columns are not added to the net calculation. Open interest is a market-level measure. Contracts are not dollars or individually named fund positions.
 
-公式：
+## Banks
 
-- `net = long - short`
-- `weekly_change = net_t - net_(t-1)`，仅两个报告日严格相隔 7 天时计算。
-- `index_52_observations = 100 × (当前净仓 − 最近52条报告最小净仓) / (最近52条最大净仓 − 最近52条最小净仓)`。
-
-52 条观测含当期；不足 52 条、存在缺失、范围为零均返回 null。它是**区间位置，不是百分位排名**；遇到缺报，52 条观测也不一定严格等于 52 周。
-
-长短仓取对应 long/short 列，单独的 spreading 列不叠加。未平仓量是全市场指标，不是该类别的仓位。数据单位为合约，不是美元，也不是一家具体基金的实名持仓。
-
-COT 通常是周度披露，具体节假日和延迟以 CFTC 发布安排为准；页面只把官方报告日期标为报告期。
-
-## 银行
-
-| 规范字段 | FDIC 原字段 | 单位/性质 |
+| Field | Original FDIC field | Unit / basis |
 |---|---|---|
-| assets | ASSET | 千美元，期末余额 |
-| deposits | DEP | 千美元，期末余额 |
-| loans_net | LNLSNET | 千美元，净贷款及租赁口径 |
-| equity | EQ | 千美元，期末权益 |
-| net_income_ytd | NETINC | 千美元，年初至今累计 |
-| net_income_quarter | 派生 | 千美元，单季度 |
-| roa / roe | ROA / ROE | API 原始百分比值，保留至导出，不重复乘100 |
-| loan_deposit_ratio | LNLSNET / DEP | 无单位 |
-| equity_asset_ratio | EQ / ASSET | 无单位；不是风险加权资本比率 |
+| assets | ASSET | USD thousands, period-end |
+| deposits | DEP | USD thousands, period-end |
+| loans_net | LNLSNET | USD thousands, net loans/leases |
+| equity | EQ | USD thousands, period-end |
+| net_income_ytd | NETINC | USD thousands, year-to-date |
+| net_income_quarter | derived | USD thousands, standalone quarter |
+| roa / roe | ROA / ROE | Original API percentage values |
 
-Q1 单季净利润等于 Q1 累计；Q2/Q3/Q4 为当前累计减去**同年紧邻上一季度**累计。若上一季度没有记录，结果为空；不跨年份差分利润。
+Q1 standalone income equals Q1 YTD. Later quarters subtract the immediately preceding same-year quarter's YTD income. If that preceding quarter is unavailable, standalone income is null. Two-period growth uses `(current − baseline) / abs(baseline)` and is undefined for a zero/missing baseline.
 
-两期对比页面的增长率使用 `(当前 − 基期) / abs(基期)`。基期为零或缺失不计算；负基期明确采用绝对值分母，避免把扭亏为盈显示为负增长。余额与累计利润可以任意选择两期，但不同年内季度的 YTD 利润直接比较时需考虑累计长度。
-
-金额不额外乘1000；页面始终注明千美元。视觉缩写中：1M 千美元 = 10亿美元，1B 千美元 = 1万亿美元。CSV 保留未缩写的千美元数值。
-
-仅覆盖选定银行法律实体；不将某个 CERT 默认合并为上市控股公司。合并、收购、报表重分类会影响可比性。
+These are bank legal entities identified by FDIC CERT, not automatically consolidated listed holding companies. Net loans/deposits and equity/assets are simple ratios, not regulatory capital adequacy ratios. Only selected Call Report-derived fields are included, not the full FFIEC schedules.
 
 ## N-PX
 
-发现：SEC submissions `recent` + 日期范围相关的历史 JSON 分片，筛选 N-PX/N-PX/A，以 accession 去重。
-下载：访问 accession 的 `index.json`，选择实际列出的 XML 文件；不是猜测一个固定的投票文件名。
-解析：识别 `proxyVoteTable` / `proxyTable`，忽略命名空间前缀差异，保留原文叶子字段。
+Reports are discovered through SEC submissions and relevant historical shards. XML vote tables are parsed by local element names, retaining original fields.
 
-关键区分：
+A proposal's total sharesVoted is not added to the shares in its individual voteRecord segments. Vote direction and alignment with management use separate fields. Shares on loan remain separate. Multiple proposals must not be summed into holdings.
 
-1. **提案层 sharesVoted** 是提案总投票股数；投票明细 `voteRecord.sharesVoted` 是某个方向的股数，不与提案总股数再相加。
-2. `howVoted` 是提案方向，如 FOR、AGAINST、ABSTAIN、WITHHOLD、1 YEAR。
-3. `managementRecommendation` 在该结构中标示相对管理层的 FOR/AGAINST，不由 `howVoted` 猜测。
-4. `sharesOnLoan` 单独保存，不默认为零；投票股数、借出股数都不能当作当前持仓。
-5. 一个提案可能多方向分拆；方向分布统计“投票明细段数”，不是按股数加权。按某方向筛选时保留匹配提案的全部分拆明细，避免丢失上下文。
-6. 反对管理层比例 = `management_alignment == AGAINST` 明细段数 / 明确为 FOR 或 AGAINST 的明细段数。
-7. 发行人数量优先按 CUSIP，其次 ISIN，再次名称去重；这是标识级近似计数，不是已完成全球发行人实体解析。
-8. `series_ids`、`manager_numbers`、`raw_fields` 保留在导出中；本版不跨系列合并证券、不自动映射 ticker。
+The distribution chart counts vote segments, not share-weighted votes. Filtering a proposal by one direction retains all split-vote segments for that proposal. Management-opposition share is the count of AGAINST-management segments divided by explicitly FOR/AGAINST-management segments.
 
-**修订：**保留 N-PX/A，读取可用 amendmentType 等封面信息。每次页面只展示一份文件，不与原版相加，也不假设“日期最新的一份”已经覆盖全部原版记录。原文件/修订之间的精细替换合并尚未实现。
-
-**无表不等于无仓：**旧 HTML、notice、no-vote、保密申请或不支持结构会显示 `no_structured_vote_table` 并提供源链接。它与成功解析的空表不同，更不代表零持仓。
-
-注册基金与机构管理人的 N-PX 报告覆盖事项不同，页面保留 registrantType/reportType/confidentialTreatment/explanatoryNotes，不把管理人高管薪酬投票记录说成全部治理投票。
+Each filing is viewed separately, including N-PX/A. Amendments are not automatically added to or treated as complete replacements of the original. Notices, legacy HTML, unsupported structures or absent vote tables remain marked; they do not mean zero holdings.

@@ -12,7 +12,7 @@ from urllib.parse import urlencode, urlparse, quote
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
 
-VERSION = '1.1.0'
+VERSION = '2.0.0'
 
 def now():
     return dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds')
@@ -45,7 +45,7 @@ class Client:
 
     def get(self, url, sec=False):
         host = urlparse(url).hostname
-        if host not in ('publicreporting.cftc.gov', 'api.fdic.gov', 'data.sec.gov', 'www.sec.gov'):
+        if host not in ('publicreporting.cftc.gov', 'api.fdic.gov', 'data.sec.gov', 'www.sec.gov', 'disclosures-clerk.house.gov'):
             raise ValueError('Unapproved data host')
         headers = {'User-Agent': (os.environ.get('SEC_USER_AGENT') or self.options.get('sec_user_agent') or 'DisclosureLab/1.1 public-data-reader'), 'Accept': '*/*'}
         if sec:
@@ -63,7 +63,7 @@ class Client:
             self.last = time.monotonic()
             try:
                 with urlopen(Request(url, headers=headers), timeout=self.options.get('timeout', 40)) as res:
-                    if urlparse(res.url).hostname not in ('publicreporting.cftc.gov','api.fdic.gov','data.sec.gov','www.sec.gov'):
+                    if urlparse(res.url).hostname not in ('publicreporting.cftc.gov','api.fdic.gov','data.sec.gov','www.sec.gov','disclosures-clerk.house.gov'):
                         raise ValueError('Unexpected redirect host')
                     limit = self.options.get('max_response_mb', 80) * 1024 * 1024
                     data = res.read(limit + 1)

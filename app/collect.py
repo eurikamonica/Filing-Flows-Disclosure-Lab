@@ -3,11 +3,14 @@ import json
 from pathlib import Path
 from core import Client, read_json, now, publish, refresh_module, collect_cot, collect_banks, collect_npx, write_json, VERSION
 
+from holdings import collect_holdings
+from congress import collect_congress
+
 ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     parser = argparse.ArgumentParser(description='Collect official public disclosures; demo never substitutes for real data')
-    parser.add_argument('--only',choices=['all','cot','banks','npx'],default='all')
+    parser.add_argument('--only',choices=['all','cot','banks','npx','holdings','congress'],default='all')
     parser.add_argument('--config',type=Path,default=ROOT/'config/settings.json')
     parser.add_argument('--output',type=Path,default=ROOT/'docs/data')
     parser.add_argument('--storage',type=Path,default=ROOT/'storage')
@@ -18,7 +21,7 @@ def main():
     data['version'] = VERSION
     client = Client(args.storage,cfg.get('http',{}))
     failed = False
-    for key,func in [('cot',collect_cot),('banks',collect_banks),('npx',collect_npx)]:
+    for key,func in [('cot',collect_cot),('banks',collect_banks),('npx',collect_npx),('holdings',collect_holdings),('congress',collect_congress)]:
         if args.only not in ('all',key):
             continue
         print('Collecting '+key,flush=True)
