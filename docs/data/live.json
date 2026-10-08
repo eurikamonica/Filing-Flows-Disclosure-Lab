@@ -44107,8 +44107,8 @@
       ],
       "coverage": "Configured markets; futures only; full refresh of configured date range",
       "status": "ok",
-      "last_attempt": "2026-10-06T23:47:18+00:00",
-      "updated_at": "2026-10-06T23:47:20+00:00",
+      "last_attempt": "2026-10-08T10:53:39+00:00",
+      "updated_at": "2026-10-08T10:53:40+00:00",
       "error": null
     },
     "banks": {
@@ -45443,8 +45443,8 @@
       "unit": "USD thousands",
       "coverage": "FDIC BankFind selected Call Report-derived financials; bank entities, not listed holding companies",
       "status": "ok",
-      "last_attempt": "2026-10-06T23:47:21+00:00",
-      "updated_at": "2026-10-06T23:47:22+00:00",
+      "last_attempt": "2026-10-08T10:53:40+00:00",
+      "updated_at": "2026-10-08T10:53:42+00:00",
       "error": null
     },
     "npx": {
@@ -49710,8 +49710,8 @@
       ],
       "errors": [],
       "status": "ok",
-      "last_attempt": "2026-10-06T23:47:22+00:00",
-      "updated_at": "2026-10-06T23:47:22+00:00",
+      "last_attempt": "2026-10-08T10:53:42+00:00",
+      "updated_at": "2026-10-08T10:53:42+00:00",
       "error": null
     },
     "holdings": {
@@ -71481,7 +71481,7 @@
             }
           ],
           "notices": [],
-          "last_success": "2026-10-08T10:52:48+00:00",
+          "last_success": "2026-10-08T10:53:43+00:00",
           "stale": false
         },
         {
@@ -75303,15 +75303,15 @@
               "url": "https://www.sec.gov/Archives/edgar/data/1336528/000117266126003777/0001172661-26-003777-index.html"
             }
           ],
-          "last_success": "2026-10-08T10:52:48+00:00",
+          "last_success": "2026-10-08T10:53:43+00:00",
           "stale": false
         }
       ],
       "errors": [],
       "coverage": "Configured managers only; public 13F positions, not real-time portfolios. XML-era history only.",
       "status": "ok",
-      "last_attempt": "2026-10-08T10:52:48+00:00",
-      "updated_at": "2026-10-08T10:52:48+00:00",
+      "last_attempt": "2026-10-08T10:53:42+00:00",
+      "updated_at": "2026-10-08T10:53:43+00:00",
       "error": null
     },
     "congress": {
@@ -83039,10 +83039,10 @@
       ],
       "coverage_note": "House watchlist automatic; Senate/state/local explicit imports only. Reviewed asset excerpts are partial disclosed assets, never reconstructed current holdings. Raw OCR candidates are separate.",
       "status": "ok",
-      "last_attempt": "2026-10-08T10:36:44+00:00",
-      "updated_at": "2026-10-08T10:36:45+00:00",
+      "last_attempt": "2026-10-08T10:53:43+00:00",
+      "updated_at": "2026-10-08T10:53:45+00:00",
       "error": null
     }
   },
-  "generated_at": "2026-10-08T10:52:48+00:00"
+  "generated_at": "2026-10-08T10:53:45+00:00"
 }
