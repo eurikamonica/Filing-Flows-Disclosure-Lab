@@ -44332,8 +44332,8 @@
       ],
       "coverage": "Configured markets; futures only; full refresh of configured date range",
       "status": "ok",
-      "last_attempt": "2026-10-10T10:50:06+00:00",
-      "updated_at": "2026-10-10T10:50:08+00:00",
+      "last_attempt": "2026-10-11T10:51:22+00:00",
+      "updated_at": "2026-10-11T10:51:25+00:00",
       "error": null
     },
     "banks": {
@@ -45668,8 +45668,8 @@
       "unit": "USD thousands",
       "coverage": "FDIC BankFind selected Call Report-derived financials; bank entities, not listed holding companies",
       "status": "ok",
-      "last_attempt": "2026-10-10T10:50:08+00:00",
-      "updated_at": "2026-10-10T10:50:10+00:00",
+      "last_attempt": "2026-10-11T10:51:25+00:00",
+      "updated_at": "2026-10-11T10:51:27+00:00",
       "error": null
     },
     "npx": {
@@ -45685,7 +45685,7 @@
           "is_amendment": false,
           "source_url": "https://www.sec.gov/Archives/edgar/data/1630243/000163024325000012/0001630243-25-000012-index.htm",
           "first_seen_at": "2026-10-06T22:51:11+00:00",
-          "fetched_at": "2026-10-06T23:00:48+00:00",
+          "fetched_at": "2026-10-11T10:51:28+00:00",
           "votes": [
             {
               "id": "507ca8f40bb1463e13ed1ba9",
@@ -47583,7 +47583,7 @@
           "is_amendment": false,
           "source_url": "https://www.sec.gov/Archives/edgar/data/1630243/000163024324000015/0001630243-24-000015-index.htm",
           "first_seen_at": "2026-10-06T23:00:58+00:00",
-          "fetched_at": "2026-10-06T23:00:58+00:00",
+          "fetched_at": "2026-10-11T10:51:29+00:00",
           "votes": [
             {
               "id": "80d86714932bd7d9127f4d71",
@@ -49935,8 +49935,8 @@
       ],
       "errors": [],
       "status": "ok",
-      "last_attempt": "2026-10-10T10:50:10+00:00",
-      "updated_at": "2026-10-10T10:50:10+00:00",
+      "last_attempt": "2026-10-11T10:51:27+00:00",
+      "updated_at": "2026-10-11T10:51:30+00:00",
       "error": null
     },
     "holdings": {
@@ -71706,7 +71706,7 @@
             }
           ],
           "notices": [],
-          "last_success": "2026-10-11T10:50:24+00:00",
+          "last_success": "2026-10-11T10:51:44+00:00",
           "stale": false
         },
         {
@@ -75528,15 +75528,15 @@
               "url": "https://www.sec.gov/Archives/edgar/data/1336528/000117266126003777/0001172661-26-003777-index.html"
             }
           ],
-          "last_success": "2026-10-11T10:50:25+00:00",
+          "last_success": "2026-10-11T10:51:56+00:00",
           "stale": false
         }
       ],
       "errors": [],
       "coverage": "Configured managers only; public 13F positions, not real-time portfolios. XML-era history only.",
       "status": "ok",
-      "last_attempt": "2026-10-11T10:50:24+00:00",
-      "updated_at": "2026-10-11T10:50:25+00:00",
+      "last_attempt": "2026-10-11T10:51:30+00:00",
+      "updated_at": "2026-10-11T10:51:56+00:00",
       "error": null
     },
     "congress": {
@@ -75553,7 +75553,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2024/10066169.pdf",
           "source_sha256": "0072a625ed93e50f7bca715d8abecb0a0265ab06a1de2b120173800fdb2c9173",
           "first_seen_at": "2026-10-06T23:20:22+00:00",
-          "extracted_at": "2026-10-06T23:20:22+00:00",
+          "extracted_at": "2026-10-11T10:51:59+00:00",
           "page_count": 9,
           "page_methods": [
             {
@@ -78475,7 +78475,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20025819.pdf",
           "source_sha256": "6658b92dc56988bed856fe1431138d510a214625e2be4198cba80bd6b8e9c273",
           "first_seen_at": "2026-10-06T23:20:26+00:00",
-          "extracted_at": "2026-10-06T23:20:26+00:00",
+          "extracted_at": "2026-10-11T10:51:59+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -78525,7 +78525,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20025535.pdf",
           "source_sha256": "ffe2a0b0c0cdbc4723ec4e156c9945c24f1ef7779b02a28ebd07213c0ea551fb",
           "first_seen_at": "2026-10-06T23:20:30+00:00",
-          "extracted_at": "2026-10-06T23:20:30+00:00",
+          "extracted_at": "2026-10-11T10:51:59+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -78599,7 +78599,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20025368.pdf",
           "source_sha256": "d5adb463b7dcdc870897228d7a61450e6c6073c90dc00acfa150124ea5064b2c",
           "first_seen_at": "2026-10-06T23:20:34+00:00",
-          "extracted_at": "2026-10-06T23:20:34+00:00",
+          "extracted_at": "2026-10-11T10:52:00+00:00",
           "page_count": 2,
           "page_methods": [
             {
@@ -78726,7 +78726,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20024625.pdf",
           "source_sha256": "2b38a14a5b41a06d679896c0c524734d43a6493af334d2b28402cde821d162f8",
           "first_seen_at": "2026-10-06T23:20:39+00:00",
-          "extracted_at": "2026-10-06T23:20:39+00:00",
+          "extracted_at": "2026-10-11T10:52:00+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -78776,7 +78776,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2024/20024542.pdf",
           "source_sha256": "bacaf22789cdfcc12b63e455319c3c409501924129926ffba245709f9558df5c",
           "first_seen_at": "2026-10-06T23:20:43+00:00",
-          "extracted_at": "2026-10-06T23:20:43+00:00",
+          "extracted_at": "2026-10-11T10:52:01+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -78850,7 +78850,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/financial-pdfs/2025/10075701.pdf",
           "source_sha256": "d4e3621104cea329c294cce5162af31434b285899cfd0ee1a88a0c0191e89a17",
           "first_seen_at": "2026-10-06T23:18:22+00:00",
-          "extracted_at": "2026-10-06T23:18:22+00:00",
+          "extracted_at": "2026-10-11T10:52:03+00:00",
           "page_count": 11,
           "page_methods": [
             {
@@ -81974,7 +81974,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20033337.pdf",
           "source_sha256": "d81b272aee2979c60fabfb245694d526cd60bdaa5fc3e843c814d0897e8e5c26",
           "first_seen_at": "2026-10-06T23:13:51+00:00",
-          "extracted_at": "2026-10-06T23:18:26+00:00",
+          "extracted_at": "2026-10-11T10:52:03+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -82024,7 +82024,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20030630.pdf",
           "source_sha256": "d5e5acfb93b1e3fc8720212a4159927526039b57155f3e5a1a23ea297a4b79b6",
           "first_seen_at": "2026-10-06T23:13:54+00:00",
-          "extracted_at": "2026-10-06T23:18:34+00:00",
+          "extracted_at": "2026-10-11T10:52:04+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -82098,7 +82098,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2025/20026590.pdf",
           "source_sha256": "928b158151a385bbd8559711b78cfbb6bff7d0069d078aa0ccfdc7efd9617df9",
           "first_seen_at": "2026-10-06T23:13:58+00:00",
-          "extracted_at": "2026-10-06T23:18:39+00:00",
+          "extracted_at": "2026-10-11T10:52:04+00:00",
           "page_count": 2,
           "page_methods": [
             {
@@ -82345,7 +82345,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035553.pdf",
           "source_sha256": "a818e74d3e058a307ce73be76d4ac8a805346b9638db0cc54521c6abaed28bd7",
           "first_seen_at": "2026-10-06T23:14:05+00:00",
-          "extracted_at": "2026-10-06T23:18:47+00:00",
+          "extracted_at": "2026-10-11T10:52:05+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -82395,7 +82395,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035143.pdf",
           "source_sha256": "d745987c4b51ed65f9c8955932ca5c94a916f758201128d6f9978b4438fdb9e0",
           "first_seen_at": "2026-10-06T23:14:10+00:00",
-          "extracted_at": "2026-10-06T23:18:50+00:00",
+          "extracted_at": "2026-10-11T10:52:06+00:00",
           "page_count": 2,
           "page_methods": [
             {
@@ -82594,7 +82594,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20034836.pdf",
           "source_sha256": "90bf98e6a2a3685f429964bb0e154ae05cc99423227b94666012332b81dc821e",
           "first_seen_at": "2026-10-06T23:14:15+00:00",
-          "extracted_at": "2026-10-06T23:18:54+00:00",
+          "extracted_at": "2026-10-11T10:52:07+00:00",
           "page_count": 1,
           "page_methods": [
             {
@@ -82668,7 +82668,7 @@
           "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20033725.pdf",
           "source_sha256": "8ddf562e617976594595f2e921d63f9aab8dfd898524673d4560dfe495cfd28f",
           "first_seen_at": "2026-10-06T23:14:18+00:00",
-          "extracted_at": "2026-10-06T23:18:57+00:00",
+          "extracted_at": "2026-10-11T10:52:07+00:00",
           "page_count": 3,
           "page_methods": [
             {
@@ -83264,10 +83264,10 @@
       ],
       "coverage_note": "House watchlist automatic; Senate/state/local explicit imports only. Reviewed asset excerpts are partial disclosed assets, never reconstructed current holdings. Raw OCR candidates are separate.",
       "status": "ok",
-      "last_attempt": "2026-10-11T10:33:29+00:00",
-      "updated_at": "2026-10-11T10:33:31+00:00",
+      "last_attempt": "2026-10-11T10:51:56+00:00",
+      "updated_at": "2026-10-11T10:52:07+00:00",
       "error": null
     }
   },
-  "generated_at": "2026-10-11T10:50:25+00:00"
+  "generated_at": "2026-10-11T10:52:07+00:00"
 }
