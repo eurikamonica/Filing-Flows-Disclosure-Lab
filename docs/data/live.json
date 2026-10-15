@@ -83264,10 +83264,10 @@
       ],
       "coverage_note": "House watchlist automatic; Senate/state/local explicit imports only. Reviewed asset excerpts are partial disclosed assets, never reconstructed current holdings. Raw OCR candidates are separate.",
       "status": "ok",
-      "last_attempt": "2026-10-15T15:52:26+00:00",
-      "updated_at": "2026-10-15T15:52:28+00:00",
+      "last_attempt": "2026-10-15T16:53:10+00:00",
+      "updated_at": "2026-10-15T16:53:11+00:00",
       "error": null
     }
   },
-  "generated_at": "2026-10-15T16:37:04+00:00"
+  "generated_at": "2026-10-15T16:53:11+00:00"
 }
