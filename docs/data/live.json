@@ -83234,6 +83234,56 @@
           "stale": false
         },
         {
+          "report_id": "house-20035780",
+          "person": "Nancy Pelosi",
+          "jurisdiction": "US House",
+          "office": "CA11",
+          "index_year": 2026,
+          "report_type": "PTR",
+          "filing_type_code": "P",
+          "filed_date": "2026-11-06",
+          "source_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035780.pdf",
+          "source_sha256": "ec708f9980950f6be7cbf749dc02d31df1e649cf5d347a84208b56b8368df5b2",
+          "first_seen_at": "2026-11-09T18:53:16+00:00",
+          "extracted_at": "2026-11-09T18:53:16+00:00",
+          "page_count": 1,
+          "page_methods": [
+            {
+              "page": 1,
+              "method": "text",
+              "mean_word_confidence": null
+            }
+          ],
+          "candidates": [
+            {
+              "id": "72567f60a84f73085b272cd7",
+              "report_id": "house-20035780",
+              "source_sha256": "ec708f9980950f6be7cbf749dc02d31df1e649cf5d347a84208b56b8368df5b2",
+              "page": 1,
+              "kind": "unclassified",
+              "asset": "",
+              "ticker": "",
+              "owner": "",
+              "transaction_type": "",
+              "transaction_date": "",
+              "amount_min": 50001,
+              "amount_max": 100000,
+              "valuation_date": "",
+              "valuation_basis": "",
+              "reviewer": "",
+              "reviewed_at": "",
+              "notes": "",
+              "amount_text": "$50,001 - $100,000",
+              "method": "text",
+              "mean_word_confidence": null,
+              "excerpt": "Type Date Gains > $200? SP Warner Bros. Discovery, Inc. - Series S 10/07/2026 10/07/2026 $50,001 - A Common Stock (WBD) [ST] $100,000 F S: New",
+              "review_status": "needs_review"
+            }
+          ],
+          "status": "extracted",
+          "stale": false
+        },
+        {
           "report_id": "house-20035553",
           "person": "Nancy Pelosi",
           "jurisdiction": "US House",
@@ -84155,19 +84205,19 @@
         },
         {
           "year": 2026,
-          "matched": 4,
-          "supported": 4,
-          "selected": 4,
+          "matched": 5,
+          "supported": 5,
+          "selected": 5,
           "unsupported_filing_codes": [],
           "truncated": false
         }
       ],
       "coverage_note": "House watchlist automatic; Senate/state/local explicit imports only. Reviewed asset excerpts are partial disclosed assets, never reconstructed current holdings. Raw OCR candidates are separate.",
       "status": "ok",
-      "last_attempt": "2026-11-09T08:03:42+00:00",
-      "updated_at": "2026-11-09T08:03:44+00:00",
+      "last_attempt": "2026-11-09T18:53:13+00:00",
+      "updated_at": "2026-11-09T18:53:16+00:00",
       "error": null
     }
   },
-  "generated_at": "2026-11-09T16:39:47+00:00"
+  "generated_at": "2026-11-09T18:53:16+00:00"
 }
